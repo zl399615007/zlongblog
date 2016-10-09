@@ -1,0 +1,10 @@
+启动mongod（C:\Program Files\MongoDB\Server\3.2\bin下运行）: mongod --dbpath=./data
+启动服务,项目下运行:SET DEBUG=zlongblog:* & npm start
+
+操作数据库
+打开命令窗口
+mongo
+use zlongblog
+db.users.find({})
+
+
