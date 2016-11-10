@@ -22,3 +22,36 @@ git add -A
 git commit -m"init"
 git remote add origin +"仓库地址"
 git push -u origin master
+
+安装bower
+npm install bower -g
+配置bower下载包安装目录
+{"directory":"./public/lib"}
+
+
+
+日志记录器 debug
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
