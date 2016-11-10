@@ -5,6 +5,7 @@ var util=require('../util');
 var router = express.Router();
 
 /* GET users listing. */
+//只用写
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
