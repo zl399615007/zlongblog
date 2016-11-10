@@ -8,3 +8,17 @@ use zlongblog
 db.users.find({})
 
 
+一、安装生成器
+npm install -g express-generator
+
+生成项目：express -e zlongblog
+
+二、启动项目 cd zlongblog && npm install
+        SET DEBUG=zlongblog:* & npm start
+
+三、提交git仓库
+git init
+git add -A
+git commit -m"init"
+git remote add origin +"仓库地址"
+git push -u origin master
