@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');//解析cookie  req.cookies属性存
 var bodyParser = require('body-parser');//处理请求体 req.body属性，用来存放请求体
 var session=require('express-session');
 var MongoStore=require('connect-mongo')(session);
+var flash = require('connect-flash');
 
 
 var routes = require('./routes/index');//主页路由
@@ -36,10 +37,12 @@ app.use(session({
   store:new MongoStore({
     url:config.dbUrl
   })
-
 }));
+app.use(flash());
 app.use(function(req,res,next){
   res.locals.user=req.session.user;
+  res.locals.success = req.flash('success').toString();
+  res.locals.error = req.flash('error').toString();
   next();
 });
 app.use(express.static(path.join(__dirname, 'public')));//设置public文件夹为存放静态文件的目录。 localhost:3000/a 意思就是找public文件下的a文件，public文件代表第一个'/'
