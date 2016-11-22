@@ -31,6 +31,8 @@ router.post('/reg',auth.checkNotLogin,function (req,res,next) {
     }
     else {
         req.body.password =util.md5(req.body.password);
+        //增加一个用户头像 
+        req.body.avatar ='https://secure.gravatar.com/avatar/'+util.md5(req.body.email)+'?s=48';
         modules.User.findOne({username:req.body.username,password:req.body.password},function (err,doc){//查找数据库，判断是否已经注册过
             if(err){
                 req.flash('error', '注册失败!');

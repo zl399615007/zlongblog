@@ -1,29 +1,29 @@
 <%- include ../include/header.html %>
-<form action="/articles/add" enctype="multipart/form-data" method="post" class="form-horizontal">
-    <input type="hidden" name="_id" value="<%=article._id%>">
+<form class="form-horizontal" role="form" action="/users/login" method="post">
     <div class="form-group">
-        <label for="title" class="col-sm-2 control-label">标题</label>
+        <label for="username" class="col-sm-2 control-label">用户名</label>
         <div class="col-sm-10">
-            <input value="<%=article.title%>" name="title" type="title" class="form-control" id="title" placeholder="标题">
+            <input name="username" type="username"  id="username" class="form-control" placeholder="username">
         </div>
     </div>
     <div class="form-group">
-        <label for="content" class="col-sm-2 control-label">正文</label>
+        <label for="password" class="col-sm-2 control-label">密码</label>
         <div class="col-sm-10">
-            <textarea class="form-control" name="content" id="content" cols="30" rows="10"><%=article.content%></textarea>
+            <input type="password" name="password" id="password" class="form-control" placeholder="密码">
         </div>
-    </div>
-    <div class="form-group">
-        <label for="content" class="col-sm-2 control-label">图片</label>
-        <div class="col-sm-10">
-            <img class="img-responsive" src="<%=article.poster%>" alt="<%=article.title%>"/>
-            <input type="file" class="form-control" name="poster" >
-        </div>
-
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">发表文章</button>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> 记住密码
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">登录</button>
         </div>
     </div>
 </form>

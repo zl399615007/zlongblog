@@ -16,7 +16,7 @@ var articles=require('./routes/articles');
 
 
 var app = express(); //生成一个express实例app（函数）
-app.use('/articles',articles);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));//设置 views 文件夹为存放视图文件的目录, 即存放模板文件的地方,__dirname 为全局变量,存储当前正在执行的脚本所在的目录。
 app.set('view engine', 'html'); //设置视图模板引擎为 html。
