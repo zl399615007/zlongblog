@@ -1,0 +1,21 @@
+{
+  "name": "zlongblog",
+  "description": "",
+  "main": "",
+  "authors": [
+    "zl399615007 <399615007@qq.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/zl399615007/zlongblog",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
