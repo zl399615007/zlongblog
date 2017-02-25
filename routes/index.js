@@ -6,7 +6,18 @@ var router = express.Router(); //生成一个路由实例
 
 /* GET home page.  取得主页*/
 router.get('/', function(req, res, next) {
-  models.Article.find({}).populate('user').exec(function(err,articles){
+  var keyword=req.query.keyword;
+  var search=req.query.search;
+  var queryObj={};
+  if(search){
+    req.session.keyword=keyword;
+
+  }
+  keyword= req.session.keyword;
+  var reg=new RegExp(keyword,'i');
+  queryObj={$or:[{title:reg},{content:reg}]};
+
+  models.Article.find(queryObj).populate('user').exec(function(err,articles){
     articles.forEach(function(article){
       article.content=markdown.toHTML(article.content);
     });

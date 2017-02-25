@@ -21,7 +21,6 @@ router.get('/add',auth.checkLogin,function(req,res){
     res.render('article/add',{title:'发表文章'});
 });
 router.post('/add',auth.checkLogin,upload.single('poster'),function(req,res,next){
-    console.log(req.file);
     var article=req.body;
     // /uploads/文件名.jpg
     if(req.file){

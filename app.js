@@ -43,6 +43,7 @@ app.use(function(req,res,next){
   res.locals.user=req.session.user;
   res.locals.success = req.flash('success').toString();
   res.locals.error = req.flash('error').toString();
+  res.locals.keyword=req.session.keyword;
   next();
 });
 app.use(express.static(path.join(__dirname, 'public')));//设置public文件夹为存放静态文件的目录。 localhost:3000/a 意思就是找public文件下的a文件，public文件代表第一个'/'
