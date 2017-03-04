@@ -1,7 +1,7 @@
-#如何运行
+﻿#如何运行
 ##下载
 ```
-git clone https://github.com/zhufengnodejs/201602blog.git
+git clone https://github.com/zl399615007/zlongblog.git
 ```
 ##安装
 ```
