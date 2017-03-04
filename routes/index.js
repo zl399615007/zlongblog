@@ -1,31 +1,47 @@
-var express = require('express'); //导入express模块
+var express = require('express');
 var markdown = require('markdown').markdown;
 var models = require('../models');
-var router = express.Router(); //生成一个路由实例
+//调用Router方法生成一个路由的实例
+var router = express.Router();
 
-
-/* GET home page.  取得主页*/
+/**
+ * path 指定路径
+ * listener 指定回调监听函数
+ */
+/**
+ * 分页 传参 当前页码 每页的条数
+ * 结果 当页的数据 一共多少页 当前页码 每页的条数
+ */
 router.get('/', function(req, res, next) {
-  var keyword=req.query.keyword;
-  var search=req.query.search;
-  var queryObj={};
-  if(search){
-    req.session.keyword=keyword;
+  //user 字符串 对象 user.avatar
+  //先查找 然后把user字符串转成user对象
+  var keyword = req.query.keyword;//取出查询关键字
+  var search = req.query.search;//取出查询按钮
+  var pageNum = parseInt(req.query.pageNum)||1;//当前页码
+  var pageSize = parseInt(req.query.pageSize)||2;//一页有多少条数据
 
+  var queryObj = {};
+  if(search){// 如果search有值，提交过来的
+    req.session.keyword = keyword;
   }
-  keyword= req.session.keyword;
-  var reg=new RegExp(keyword,'i');
-  queryObj={$or:[{title:reg},{content:reg}]};
-
-  models.Article.find(queryObj).populate('user').exec(function(err,articles){
+  keyword = req.session.keyword;//我们keyword就从session就可以了
+  var reg = new RegExp(keyword,'i');
+  queryObj = {$or:[{title:reg},{content:reg}]};
+  models.Article.find(queryObj).skip((pageNum-1)*pageSize).limit(pageSize).populate('user').exec(function(err,articles){
     articles.forEach(function(article){
-      article.content=markdown.toHTML(article.content);
+      article.content = markdown.toHTML(article.content);
     });
-    res.render('index', { articles:articles });
+    //取得这个条件有多少条符合的数据
+    models.Article.count(queryObj,function(err,count){
+      res.render('index', {
+        articles: articles,
+        totalPage:Math.ceil(count/pageSize),
+        keyword:keyword,
+        pageNum:pageNum,
+        pageSize:pageSize
+      });
+    })
   });
-
-//当用户访问根目录也就是 / 的时候执行此回调
-   //渲染views/index.ejs模版并显示到浏览器中
 });
 
-module.exports = router; //导出这个路由并在app.js中通过app.use('/', routes); 加载
+module.exports = router;

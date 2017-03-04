@@ -1,61 +1,63 @@
-#!/usr/bin/env node 表明是 node 可执行文件。
-
+#!/usr/bin/env node
 
 /**
  * Module dependencies.
  */
-
-var app = require('../app'); //引入app.js导出的app实例
-var debug = require('debug')('zlongblog:server'); //引入打印调试日志的debug模块，并设置名称。
-var http = require('http'); //引入http
+//引入app=express()
+var app = require('../app');
+//日志记录器 通过修改DEBUG环境变量来改变日志的输出
+var debug = require('debug')('201602blog:server');
+var http = require('http');
 
 /**
- * Get port from environment and store in Express. 从环境变量中获取端口号并存放到express（app）中
+ * 从环境变量中获取端口号并保存到app中
  */
 
 var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);//设置端口号
+//设置保存到的app的一个私有属性中
+app.set('port', port);
 
 /**
- * Create HTTP server. 创建http服务器
+ * Create HTTP server.
  */
 
 var server = http.createServer(app);
 
 /**
- * Listen on provided port, on all network interfaces. 在所有的网络接口中监听提供的端口
+ * 监听提供的端口
+ * Listen on provided port, on all network interfaces.
  */
 
 server.listen(port);
-server.on('error', onError); //监听错误事件
-server.on('listening', onListening); //启动工程并监听3000端口，成功后打印 Express server listening on port 3000。
+server.on('error', onError);
+server.on('listening', onListening);
 
 /**
- * Normalize a port into a number, string, or false.  把一个端口处理成一个数字或字符串或者false
+ * Normalize a port into a number, string, or false.
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10); //先试图转成10进制数字
+  var port = parseInt(val, 10);
 
   if (isNaN(port)) {
-    // named pipe 转不成数字就当作命名管道来处理
+    // named pipe
     return val;
   }
 
   if (port >= 0) {
-    // port number 如果端口大于0就返回端口
+    // port number
     return port;
   }
 
-  return false; //不是命名管道，也不是正常端口就返回false
+  return false;
 }
 
 /**
- * Event listener for HTTP server "error" event. 服务器的错误事件监听器
+ * Event listener for HTTP server "error" event.
  */
 
 function onError(error) {
-  if (error.syscall !== 'listen') { //如果系统调用不是监听则抛出错误
+  if (error.syscall !== 'listen') {
     throw error;
   }
 
@@ -63,30 +65,32 @@ function onError(error) {
     ? 'Pipe ' + port
     : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages 更友好的处理特定的监听错误
-  switch (error.code) {//错误编码
-    case 'EACCES': //没有权限
-      console.error(bind + ' requires elevated privileges');//没有权限绑定指定的端口
-      process.exit(1); //异常退出
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    //没有权限 在linux用户不能使用1000以下的端口 80 必须root用户才能用
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
       break;
-    case 'EADDRINUSE': //端口被占用
-      console.error(bind + ' is already in use');//端口被占用
-      process.exit(1); //异常退出
+    // Error Address in use 端口被占用
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
       break;
     default:
-      throw error; //其他情况抛出错误并终止进程
+      throw error;
   }
 }
 
 /**
- * Event listener for HTTP server "listening" event. 服务器的监听端口成功事件回调
+ * Event listener for HTTP server "listening" event.
  */
 
 function onListening() {
-  var addr = server.address(); //取得服务器的地址
-  var bind = typeof addr === 'string' //监听地址如果是字符串返回命名管道名，如果是数字返回端口
+  //先获取到绑定的地址
+  var addr = server.address();
+  var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind); //记录日志
+  debug('Listening on ' + bind);
 }
- 
