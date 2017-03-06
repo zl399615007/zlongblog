@@ -34,7 +34,7 @@ app.set('view engine', 'html');
 app.engine('html',require('ejs').__express);
 
 //在你把favicon图标放置在public目录之后取消注释
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'year_of_dragon_128px_1168427_easyicon.net.ico')));
 //日志记录中间件
 //:method :url :status :response-time ms - :res[content-length]
 app.use(logger('dev'));
